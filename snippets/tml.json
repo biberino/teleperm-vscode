@@ -1,0 +1,199 @@
+{
+	"END IF": {
+		"prefix": "end",
+		"body": [
+			"END IF;"
+		],
+		"description": "END IF"
+	},
+	"END FOR": {
+		"prefix": "end",
+		"body": [
+			"END FOR;"
+		],
+		"description": "END FOR"
+	},
+	"END SEQUENCE": {
+		"prefix": "end",
+		"body": [
+			"END SEQUENCE;"
+		],
+		"description": "END SEQUENCE"
+	},
+	"IF THEN": {
+		"prefix": "if",
+		"body": [
+			"IF ${1:Bedingung};",
+			"THEN;",
+			"\t$0",
+			"END IF;"
+		],
+		"description": "IF THEN"
+	},
+	"IF THEN ELSE": {
+		"prefix": "if",
+		"body": [
+			"IF ${1:Bedingung};",
+			"THEN;",
+			"\t$0",
+			"ELSE;",
+			"\t$0",
+			"END IF;"
+		],
+		"description": "IF THEN ELSE"
+	},
+	"IF 0B": {
+		"prefix": "if",
+		"body": [
+			"IF 0B;",
+			"THEN;",
+			"\t$0",
+			"END IF;"
+		],
+		"description": "IF 0B"
+	},
+	"SEQUENCE": {
+		"prefix": "seq",
+		"body": [
+			"SEQUENCE ${1:Analogvariable};",
+			"STEP ${2:x1};",
+			"\t$0",
+			"STEP ${3:x2};",
+			"\t$0",
+			"OUT;",
+			"\t$0",
+			"END SEQUENCE 255;"
+		],
+		"description": "SEQUENCE"
+	},
+	"SEQUENCE mit UNTIL": {
+		"prefix": "seq",
+		"body": [
+			"SEQUENCE ${1:Analogvariable};",
+			"STEP ${2:x1};",
+			"\t$0",
+			"UNTIL ${3:Bedingung};",
+			"\t$0",
+			"STEP ${4:x2};",
+			"\t$0",
+			"UNTIL ${5:Bedingung};",
+			"\t$0",
+			"OUT;",
+			"\t$0",
+			"END SEQUENCE 255;",
+			"VALUE =: ${6:Steuerschrittvariable};"
+		],
+		"description": "SEQUENCE mit UNTIL"
+	},
+	"ROUTINE": {
+		"prefix": "rou",
+		"body": [
+			"ROUTINE (${1:nr});",
+			"\t$0",
+			"END ROUTINE;"
+		],
+		"description": "ROUTINE"
+	},
+	"FOR einfach": {
+		"prefix": "for",
+		"body": [
+			"FOR ${1:Schleifenzähler};",
+			"FROM ${2:Anfangswert};",
+			"BY ${3:Schrittweite};",
+			"TO ${4:Endwert};",
+			"REPEAT;",
+			"\t$0",
+			"END FOR;"
+		],
+		"description": "FOR einfach"
+	},
+	"FOR mit BREAK": {
+		"prefix": "for",
+		"body": [
+			"FOR ${1:Schleifenzähler};",
+			"FROM ${2:Anfangswert};",
+			"BY ${3:Schrittweite};",
+			"TO ${4:Endwert};",
+			"REPEAT;",
+			"\t$0",
+			"\tIF ${5:Bedingung};",
+			"\tTHEN;",
+			"\t\tBREAK;",
+			"\tEND IF;",
+			"END FOR;"
+		],
+		"description": "FOR mit BREAK"
+	},
+	"DO": {
+		"prefix": "do",
+		"body": [
+			"DO LA${1:x};",
+			"\t$0",
+			"END DO;"
+		],
+		"description": "Dekrementschleife"
+	},
+	"Aufruf": {
+		"prefix": "auf",
+		"body": [
+			"NEMO;",
+			"A,PROBLEM,${1:Name};",
+			"EI,2;",
+			"DE;",
+			"A,PROBLEM,${1:Name};",
+			"EI,2;",
+			"TAKE LA1;",
+			"GIVE LB1;"
+		],
+		"description": "Aufruf PROBLEM zum Einspielen"
+	},
+	"Komm ZL leer": {
+		"prefix": "kom",
+		"body": [
+			"/*                                               */;"
+		],
+		"description": "Kommentarzeile leer 53Z"
+	},
+	"Komm STEP 1-9": {
+		"prefix": "kom",
+		"body": [
+			"/*---------------------------------------------${1:Step}-*/;"
+		],
+		"description": "Kommentarzeile für STEP 1-9"
+	},
+	"Komm STEP 10-99": {
+		"prefix": "kom",
+		"body": [
+			"/*--------------------------------------------${1:Step}-*/;"
+		],
+		"description": "Kommentarzeile für STEP 10-99"
+	},
+	"Komm Block Anfang": {
+		"prefix": "kom",
+		"body": [
+			"/*** ${1:Block Kommentar} ***/;"
+		],
+		"description": "Kommentar Block Anfang"
+	},
+	"Komm Block Ende": {
+		"prefix": "kom",
+		"body": [
+			"/***/;"
+		],
+		"description": "Kommentar Block Ende"
+	},
+	"Region Start": {
+		"prefix": "#Region",
+		"body": [
+			"#Region $0"
+		],
+		"description": "Folding Region Start"
+	},
+	"Region End": {
+		"prefix": "#End Region",
+		"body": [
+			"#End Region"
+		],
+		"description": "Folding Region End"
+	}
+}

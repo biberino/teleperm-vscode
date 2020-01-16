@@ -1,0 +1,91 @@
+{
+	"name": "Teleperm TML",
+	"type": "dark",
+	"colors": {
+		"editor.background": "#282c34",
+		"editor.foreground": "#d4d4d4",
+		"activityBarBadge.background": "#007acc",
+		"sideBarTitle.foreground": "#bbbbbb"
+	},
+	"tokenColors": [
+		{
+			"settings": {
+				"foreground": "#eeffffff",
+				"background": "#263238ff"
+			}
+		},
+		{
+			"name": "Comment",
+			"scope": [
+				"comment",
+				"punctuation.definition.comment"
+			],
+			"settings": {
+				"fontStyle": "bold",
+				"foreground": "#0e7217"
+			}
+		},
+		{
+			"name": "Variables",
+			"scope": [
+				"variable"
+			],
+			"settings": {
+				"foreground": "#887b02"
+			}
+		},
+		{
+			"name": "Keyword Control",
+			"scope": [
+				"keyword.control",
+			],
+			"settings": {
+				"foreground": "#C792EA"
+			}
+		},
+		{
+			"name": "TML operator",
+			"scope": ["keyword.operator"],
+			"settings": {
+				"foreground": "#ffbb00"
+			}
+		},
+		{
+			"name": "String, Symbols, Inherited Class, Markup Heading",
+			"scope": [
+				"string"
+			],
+			"settings": {
+				"foreground": "#a5d162"
+			}
+		},
+		{
+			"name": "Keywords 2",
+			"scope": "keyword.control.less",
+			"settings": {
+				"foreground": "#c4fa00"
+			}
+		},
+		{
+			"name": "Wait, until",
+			"scope": "keyword.other",
+			"settings": {
+				"foreground": "#2a9c93"
+			}
+		},
+		{
+			"name": "Funktionen",
+			"scope": "entity.name.function",
+			"settings": {
+				"foreground": "#2096b4"
+			}
+		},
+		{
+			"name": "Set,return,mux",
+			"scope": "constant.language",
+			"settings": {
+				"foreground": "#fa0000"
+			}
+		}
+	]
+}

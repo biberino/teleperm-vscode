@@ -1,0 +1,10 @@
+out
+node_modules
+.vscode-test/
+*.vsix
+package-lock.json
+vsc-extension-quickstart.md
+.vscode/extensions.json
+.vscode/launch.json
+.vscode/settings.json
+.vscode/tasks.json

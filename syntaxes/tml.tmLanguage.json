@@ -1,0 +1,80 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "TML",
+	"scopeName": "source.tml",
+	"patterns": [
+		{
+			"include": "#comments"
+		},
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#variables"
+		},
+		{
+			"include": "#strings"
+		}
+	],
+	"repository": {
+		"comments": {
+			"patterns": [
+				{
+					"name": "comment.block.tml",
+					"begin": "/\\*",
+					"end": "\\*/",
+					"settings": {
+						"foreground": "#3633ff"
+						}
+				}
+				]
+	},
+		"keywords": {
+			"patterns": [
+				{
+					"name": "keyword.control",
+					"match": "\\b(IF|THEN|ELSE|END IF|DO|END DO|FOR|FROM|BY|TO|REPEAT|LOOP|BREAK|END FOR|Z1|Z0|ZE)\\b"
+				},
+				{
+					"name": "keyword.control.less",
+					"match": "\\b(SEQUENCE|STEP|OUT|END SEQUENCE|VALUE|KO|MO)\\b"
+				},
+				{
+					"name": "keyword.other",
+					"match": "\\b(UNTIL|WAIT|TXH|TXV|SYH|SYV)\\b"
+				},
+				{
+					"name": "keyword.operator",
+					"match": "\\b(==|\/=|<=|>=|<|>|AND|NOT|OR|EQU)\\b"
+				},
+				{
+					"name": "entity.name.function",
+					"match": "\\b(CALL|GIVE|TAKE|ROUTINE|END ROUTINE)\\b"
+				},
+				{
+					"name": "constant.language",
+					"match": "\\b(SET|RETURN|MUX)\\b"
+				}
+				]
+		},
+		"variables": {
+			"patterns": [
+				{
+					"name": "variable",
+					"match": "\\b(LA\\d{1,3}|LB\\d{1,3})\\b"
+				}
+				]
+		},
+		"strings": {
+			"name": "string.quoted.double",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape",
+					"match": "\\\\."
+				}
+			]
+		}
+	}
+}
