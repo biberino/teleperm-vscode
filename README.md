@@ -8,6 +8,7 @@ This is an extension for the Teleperm M Programming Language.
 - Code Formatter
 - Snippets
 - TML color theme
+- Hover Provider for Local Variables
 
 
 ## Requirements
@@ -16,7 +17,7 @@ No external dependencies are required.
 
 ## Extension Settings
 
-This extension will automatically be loaded on *.tml *.str *.lay files. The TML color theme is optional and can be activated like any other color theme.
+This extension is loaded automatically on *.tml *.str *.lay files. The TML color theme is optional and can be activated like any other color theme.
 
 ## Known Issues
 
@@ -29,4 +30,8 @@ None so far
 ### 1.0.0
 
 Initial release
+
+### 1.1.0
+
+Hover Provider for local Variables
 

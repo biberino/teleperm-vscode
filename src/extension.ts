@@ -2,6 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import * as helper from './formatter-helpers';
+import * as hover_handler from './hover';
 
 
 
@@ -25,6 +26,8 @@ const indent_out: string[] = [
 export function activate(context: vscode.ExtensionContext) {
 
 
+	console.log("GELADEN");
+
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
@@ -37,8 +40,18 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(disposable);
 
+	// hover for local variables
+	disposable = vscode.languages.registerHoverProvider('tml', {
+		provideHover(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken) {
+			return hover_handler.hover_handler(document, position, token);
+		}
+	});
+
+	context.subscriptions.push(disposable);
+
+
 	// 👍 formatter implemented using API
-	vscode.languages.registerDocumentFormattingEditProvider('tml', {
+	disposable = vscode.languages.registerDocumentFormattingEditProvider('tml', {
 		provideDocumentFormattingEdits(document: vscode.TextDocument): vscode.TextEdit[] {
 			//@TODO use preallocated array of size document.lineCount
 			let retVal: vscode.TextEdit[] = [];
@@ -84,6 +97,8 @@ export function activate(context: vscode.ExtensionContext) {
 			return retVal;
 		}
 	});
+	context.subscriptions.push(disposable);
+
 }
 
 // this method is called when your extension is deactivated

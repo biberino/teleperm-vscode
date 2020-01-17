@@ -2,8 +2,9 @@
 	"name": "teleperm-tml",
 	"displayName": "teleperm-tml",
 	"description": "Teleperm Language Support",
-	"version": "1.0.0",
-    "publisher": "Fackler",
+	"version": "1.1.0",
+	"publisher": "Fackler",
+	"icon": "icon.png",
 	"engines": {
 		"vscode": "^1.41.0"
 	},
