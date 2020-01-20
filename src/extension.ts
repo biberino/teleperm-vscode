@@ -10,14 +10,18 @@ const indent_in: string[] = [
 	"END IF",
 	"END SEQUENCE",
 	"END FOR",
-	"ELSE"
+	"ELSE",
+	"ZE",
+	"Z0"
 ];
 
 const indent_out: string[] = [
 	"THEN",
 	"SEQUENCE",
 	"REPEAT",
-	"ELSE"
+	"ELSE",
+	"Z1",
+	"Z0"
 ];
 
 

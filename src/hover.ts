@@ -65,15 +65,14 @@ export function parse_local_variables_until_found(document: vscode.TextDocument,
 export function find_latest_mux(document: vscode.TextDocument, variable: string, position: vscode.Position): string {
 
     const var_type: string = variable.substr(0, 2).toUpperCase();
+    //regexp vor MUX XX.XXXX or MUX,XX,XXXX (.lay)
+    const regex_mux = new RegExp("MUX(\\s|[,])(" + var_type + ")[,.]([A-Z]|[0-9]){1,4}");
     const regex_implicit_pointer_change = new RegExp("(" + var_type + ")[.]([A-Z]|[0-9]){1,4}[.][0-9]{1,3}");
 
     for (let current_line = position.line; current_line >= 0; current_line--) {
         const line = document.lineAt(current_line).text.trim().toUpperCase();
-        if (line.startsWith("MUX")) {
-            const split = line.substring(4).split(".");
-            if (split[0] === var_type) {
-                return line;
-            }
+        if (regex_mux.test(line)) {
+            return line;
         }
         if (regex_implicit_pointer_change.test(line)) {
             return line;
