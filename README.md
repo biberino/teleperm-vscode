@@ -8,7 +8,7 @@ This is an extension for the Teleperm M Programming Language.
 - Code Formatter
 - Snippets
 - TML color theme
-- Hover Provider for Local Variables
+- Hover Provider
 
 
 ## Requirements
@@ -33,5 +33,5 @@ Initial release
 
 ### 1.1.0
 
-Hover Provider for local Variables
+Hover provider for variables
 

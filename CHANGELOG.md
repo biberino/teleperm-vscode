@@ -6,4 +6,4 @@
 
 ## 1.1.0
 
-- Hover Provider for local Variables
+- Hover Provider for variables
