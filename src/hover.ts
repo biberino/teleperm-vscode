@@ -17,7 +17,7 @@ export function parse_local_variables(document: vscode.TextDocument): Map<string
             buffer = buffer.replace("*/", "");
             let split = buffer.split("=");
             if (split.length === 2) {
-                retVal.set(split[0].replace(/\s/g, ''), split[1]);
+                retVal.set(split[0].replace(/\s/g, ''), split[1].replace(";",""));
             }
         }
 
@@ -45,7 +45,7 @@ export function parse_local_variables_until_found(document: vscode.TextDocument,
             let split = buffer.split("=");
             let variable_name = split[0].replace(/\s/g, '');
             if (split.length === 2 && variable_name === variable) {
-                retVal = split[1];
+                retVal = split[1].replace(";","");
                 break;
             }
         }
