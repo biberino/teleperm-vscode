@@ -3,6 +3,7 @@
 import * as vscode from 'vscode';
 import * as helper from './formatter-helpers';
 import * as hover_handler from './hover';
+import * as tml_symbol from './symbol-provider';
 
 
 
@@ -101,6 +102,13 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	});
 	context.subscriptions.push(disposable);
+
+	context.subscriptions.push(
+		vscode.languages.registerDocumentSymbolProvider(
+			{ scheme: "file", language: "tml" },
+			new tml_symbol.TMLDocumentSymbolProvider()
+		)
+	);
 
 }
 

@@ -7,3 +7,7 @@
 ## 1.1.0
 
 - Hover Provider for variables
+
+## 1.2.0
+
+- Code Outline

@@ -35,3 +35,7 @@ Initial release
 
 Hover provider for variables
 
+### 1.2.0
+
+Code Outline
+
