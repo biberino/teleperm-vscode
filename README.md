@@ -9,6 +9,7 @@ This is an extension for the Teleperm M Programming Language.
 - Snippets
 - TML color theme
 - Hover Provider
+- Code Outline
 
 
 ## Requirements
