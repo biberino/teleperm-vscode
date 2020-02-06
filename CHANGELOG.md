@@ -15,4 +15,4 @@
 
 ### 1.3.0
 
-- Synrax checking (linting)
+- Syntax checking (linting)

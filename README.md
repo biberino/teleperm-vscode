@@ -10,6 +10,7 @@ This is an extension for the Teleperm M Programming Language.
 - TML color theme
 - Hover Provider
 - Code Outline
+- Syntax check
 
 
 ## Requirements
@@ -42,5 +43,5 @@ Code Outline
 
 ### 1.3.0
 
-Synrax checking (linting)
+Syntax checking (linting)
 
