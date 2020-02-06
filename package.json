@@ -2,7 +2,7 @@
 	"name": "teleperm-tml",
 	"displayName": "teleperm-tml",
 	"description": "Teleperm Language Support",
-	"version": "1.2.0",
+	"version": "1.3.0",
 	"publisher": "Fackler",
 	"icon": "icon.png",
 	"engines": {
@@ -20,12 +20,6 @@
 	],
 	"main": "./out/extension.js",
 	"contributes": {
-		"commands": [
-			{
-				"command": "tml.test",
-				"title": "TML Erweiterungstest"
-			}
-		],
 		"themes": [
             {
                 "label": "Teleperm TML",
@@ -55,7 +49,24 @@
                 "editor.tabSize": 3,
                 "editor.wordBasedSuggestions": false
                 }
-        }
+		},
+		"configuration":[
+			{
+				"title": "TML Linter",
+				"properties": {
+					"tml.linterEnabled":{
+						"type":"boolean",
+						"default":false,
+						"description": "Linter für TML aktivieren"
+					},
+					"tml.linterPath":{
+						"type":"string",
+						"default": "",
+						"description": "Pfad zum TML-Linter."
+					}
+				}
+			}
+		]
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",

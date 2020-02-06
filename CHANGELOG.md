@@ -11,3 +11,8 @@
 ## 1.2.0
 
 - Code Outline
+
+
+### 1.3.0
+
+- Synrax checking (linting)

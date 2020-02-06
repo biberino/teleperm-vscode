@@ -82,7 +82,8 @@ export class TMLDocumentSymbolProvider implements vscode.DocumentSymbolProvider 
                         active_parents[active_parents.length - 1].children.push(buffer);
                     } else {
                         symbols.push(buffer);
-                    }                }
+                    }
+                }
 
             }
 

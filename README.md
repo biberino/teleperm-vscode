@@ -40,3 +40,7 @@ Hover provider for variables
 
 Code Outline
 
+### 1.3.0
+
+Synrax checking (linting)
+

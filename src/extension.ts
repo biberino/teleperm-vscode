@@ -4,6 +4,7 @@ import * as vscode from 'vscode';
 import * as helper from './formatter-helpers';
 import * as hover_handler from './hover';
 import * as tml_symbol from './symbol-provider';
+import * as tml_diagnostic from './diagnostic';
 
 
 
@@ -24,6 +25,9 @@ const indent_out: string[] = [
 	"Z1",
 	"Z0"
 ];
+
+
+
 
 
 // this method is called when your extension is activated
@@ -110,7 +114,13 @@ export function activate(context: vscode.ExtensionContext) {
 		)
 	);
 
+	/* Diagnostic support */
+	tml_diagnostic.init(context);
+	vscode.workspace.onDidSaveTextDocument(tml_diagnostic.check_syntax);
+	vscode.workspace.onDidChangeConfiguration(tml_diagnostic.check_configuration);
+
 }
+
 
 // this method is called when your extension is deactivated
 export function deactivate() { }
