@@ -81,8 +81,7 @@ export function check_configuration(e: vscode.ConfigurationChangeEvent) {
         if (options.get("linterEnabled")) {
             let linter = options.get("linterPath");
             p.exec(linter + " --test", (error, stdout, stderr) => {
-                if (error) {
-                    vscode.window.showErrorMessage("Linter Pfad nicht korrekt!");  
+                if (error) { 
                     return;
                 }
         
@@ -91,7 +90,6 @@ export function check_configuration(e: vscode.ConfigurationChangeEvent) {
                     return;
                 }
 
-                vscode.window.showErrorMessage("Linter Pfad nicht korrekt!"); 
             });
         }
     
