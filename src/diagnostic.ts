@@ -15,6 +15,10 @@ export function init(context: vscode.ExtensionContext) {
 }
 
 export function check_syntax(document: vscode.TextDocument) {
+    if (document.languageId !== "tml") {
+        return;
+    }
+    
     let uri = document.uri;
     diagnosticCollection.delete(uri);
 
@@ -76,15 +80,15 @@ export function check_syntax(document: vscode.TextDocument) {
 }
 
 export function check_configuration(e: vscode.ConfigurationChangeEvent) {
-    if (e.affectsConfiguration("tml")){
+    if (e.affectsConfiguration("tml")) {
         let options = vscode.workspace.getConfiguration("tml");
         if (options.get("linterEnabled")) {
             let linter = options.get("linterPath");
             p.exec(linter + " --test", (error, stdout, stderr) => {
-                if (error) { 
+                if (error) {
                     return;
                 }
-        
+
                 if (stdout.startsWith("TEST")) {
                     vscode.window.showInformationMessage("Linter Pfad OK!");
                     return;
@@ -92,7 +96,7 @@ export function check_configuration(e: vscode.ConfigurationChangeEvent) {
 
             });
         }
-    
-    
+
+
     }
 }
