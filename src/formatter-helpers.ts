@@ -42,7 +42,4 @@ export function set_indentation_level(line: vscode.TextLine, level: number): vsc
 
     let new_text = buffer[level] + line.text.substring(line.firstNonWhitespaceCharacterIndex).toUpperCase();
     return vscode.TextEdit.replace(line.range, new_text);
-    let range: vscode.Range = new vscode.Range(new vscode.Position(line.lineNumber, 0),
-        new vscode.Position(line.lineNumber, line.firstNonWhitespaceCharacterIndex));
-    return vscode.TextEdit.replace(range, buffer[level]);
 }
