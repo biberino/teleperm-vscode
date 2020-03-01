@@ -29,6 +29,7 @@ const buffer: string[] = [
 
 /**
  * Adds or removes whitespaces to match the desired indentation level
+ * and turns teh string to uppercase
  * 
  * @param line The line to indent
  * @param level The indentation level
@@ -38,6 +39,9 @@ export function set_indentation_level(line: vscode.TextLine, level: number): vsc
     if (level > 13) {
         vscode.window.showErrorMessage("Mehr als 13 Einrücklevels werden nicht unterstützt. Bitte überprüfe deinen Code!");
     }
+
+    let new_text = buffer[level] + line.text.substring(line.firstNonWhitespaceCharacterIndex).toUpperCase();
+    return vscode.TextEdit.replace(line.range, new_text);
     let range: vscode.Range = new vscode.Range(new vscode.Position(line.lineNumber, 0),
         new vscode.Position(line.lineNumber, line.firstNonWhitespaceCharacterIndex));
     return vscode.TextEdit.replace(range, buffer[level]);
