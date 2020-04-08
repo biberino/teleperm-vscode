@@ -16,3 +16,7 @@
 ### 1.3.0
 
 - Syntax checking (linting)
+
+### 1.4.0
+
+- Configurable file extensions for linting

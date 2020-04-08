@@ -18,7 +18,8 @@ export function check_syntax(document: vscode.TextDocument) {
     if (document.languageId !== "tml") {
         return;
     }
-    
+
+
     let uri = document.uri;
     diagnosticCollection.delete(uri);
 
@@ -32,6 +33,29 @@ export function check_syntax(document: vscode.TextDocument) {
         vscode.window.showErrorMessage("Bitte in den Einstellungen den Pfad zum Linter angeben");
         return;
     }
+
+    let file_extensions = options.get<string>("linterFileExtensions");
+
+    let split = file_extensions?.split(";");
+
+    let file_extension_ok = false;
+
+    if (split === undefined) {
+        vscode.window.showErrorMessage("Bitte die Dateieinstellungen des TML-Linter überprüfen!");
+        return;
+    }
+    for (let index = 0; index < split.length; index++) {
+        const element = split[index];
+        if (document.fileName.endsWith(element) && element !== "") {
+            console.log(element);
+            
+            file_extension_ok = true;
+            break;
+        }
+    }
+
+    if (!file_extension_ok) { return; }
+
 
 
 

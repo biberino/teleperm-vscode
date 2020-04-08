@@ -14,7 +14,9 @@ const indent_in: string[] = [
 	"END FOR",
 	"ELSE",
 	"ZE",
-	"Z0"
+	"Z0",
+	"STEP",
+	"OUT"
 ];
 
 const indent_out: string[] = [
@@ -23,7 +25,9 @@ const indent_out: string[] = [
 	"REPEAT",
 	"ELSE",
 	"Z1",
-	"Z0"
+	"Z0",
+	"STEP",
+	"OUT"
 ];
 
 

@@ -45,3 +45,6 @@ Code Outline
 
 Syntax checking (linting)
 
+### 1.4.0
+
+Configurable file extensions for linting

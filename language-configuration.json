@@ -76,7 +76,7 @@
     }
   },
   "indentationRules": {
-    "increaseIndentPattern": "^\\s*\\b(THEN|SEQUENCE|REPEAT)\\b",
+    "increaseIndentPattern": "^\\s*\\b(THEN|SEQUENCE|REPEAT|STEP)\\b",
     "decreaseIndentPattern": "^\\s*\\b(END IF|END SEQUENCE|END FOR)\\b"
   }
 }

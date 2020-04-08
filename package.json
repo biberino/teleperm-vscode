@@ -2,7 +2,7 @@
 	"name": "teleperm-tml",
 	"displayName": "teleperm-tml",
 	"description": "Teleperm Language Support",
-	"version": "1.3.0",
+	"version": "1.4.0",
 	"publisher": "Fackler",
 	"icon": "icon.png",
 	"engines": {
@@ -63,6 +63,11 @@
 						"type":"string",
 						"default": "",
 						"description": "Pfad zum TML-Linter."
+					},
+					"tml.linterFileExtensions":{
+						"type": "string",
+						"default": ".tml;.TML",
+						"description": "Dateiendungen, durch Semicolon getrennt, bei welchen der Linter aktiv wird"
 					}
 				}
 			}
