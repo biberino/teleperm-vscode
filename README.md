@@ -15,7 +15,7 @@ This is an extension for the Teleperm M Programming Language.
 
 ## Requirements
 
-No external dependencies are required.
+To enable syntax checking the Teleperm linter needs to be installed and configured. See tml-linter options for more info.
 
 ## Extension Settings
 
