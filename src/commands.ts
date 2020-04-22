@@ -46,7 +46,7 @@ export function mark_sequence_steps() {
                 if (!line_before.startsWith("/*") || (line_before.indexOf(stepnumber) === -1)) {
                     //insert proper step mark
                     let sequence_var = sequence_stack[sequence_stack.length - 1];
-                    let comment = "/*" + "SEQ " + sequence_var + "---------------------------------------------" + stepnumber + "-*/;\n";
+                    let comment = "/*" + "SEQ " + sequence_var + "--------------------------------------" + stepnumber + "-*/;\n";
                     edit_builder.insert(new vscode.Position(index, 0), comment);
                     counter++;
                 }
