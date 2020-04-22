@@ -11,6 +11,7 @@ This is an extension for the Teleperm M Programming Language.
 - Hover Provider
 - Code Outline
 - Syntax check
+- Commands
 
 
 ## Requirements
@@ -48,3 +49,8 @@ Syntax checking (linting)
 ### 1.4.0
 
 Configurable file extensions for linting
+
+
+### 1.5.0
+
+Generate STEP Comments (via Command)

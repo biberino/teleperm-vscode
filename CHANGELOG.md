@@ -20,3 +20,7 @@
 ### 1.4.0
 
 - Configurable file extensions for linting
+
+### 1.5.0
+
+- Generate STEP Comments (via Command)

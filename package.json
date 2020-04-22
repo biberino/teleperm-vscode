@@ -2,69 +2,88 @@
 	"name": "teleperm-tml",
 	"displayName": "teleperm-tml",
 	"description": "Teleperm Language Support",
-	"version": "1.4.0",
+	"version": "1.5.0",
 	"publisher": "Fackler",
 	"icon": "icon.png",
 	"engines": {
 		"vscode": "^1.41.0"
 	},
 	"repository": "https://github.com/biberino/teleperm-vscode",
-    "categories": [
-        "Programming Languages",
-        "Snippets",
+	"categories": [
+		"Programming Languages",
+		"Snippets",
 		"Formatters",
 		"Themes"
-    ],
+	],
 	"activationEvents": [
 		"onLanguage:tml"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
+		"commands": [
+			{
+				"command": "tml.mark_steps",
+				"title": "TML Schrittanweisungen mit Kommentar versehen"
+			}
+		],
 		"themes": [
-            {
-                "label": "Teleperm TML",
-                "uiTheme": "vs-dark",
-                "path": "./themes/Teleperm TML-color-theme.json"
-            }
-        ],
-		"languages": [{
-            "id": "tml",
-            "aliases": ["TML", "tml"],
-            "extensions": [".tml",".str",".lay"],
-            "configuration": "./language-configuration.json"
-        }],
-        "grammars": [{
-            "language": "tml",
-            "scopeName": "source.tml",
-            "path": "./syntaxes/tml.tmLanguage.json"
-        }],
-        "snippets": [{
-            "language": "tml",
-            "path": "./snippets/tml.json"
-        }],
-        "configurationDefaults": {
-            "telemetry.enableCrashReporter": false,
-            "telemetry.enableTelemetry": false,
-            "[tml]": {
-                "editor.tabSize": 3,
-                "editor.wordBasedSuggestions": false
-                }
+			{
+				"label": "Teleperm TML",
+				"uiTheme": "vs-dark",
+				"path": "./themes/Teleperm TML-color-theme.json"
+			}
+		],
+		"languages": [
+			{
+				"id": "tml",
+				"aliases": [
+					"TML",
+					"tml"
+				],
+				"extensions": [
+					".tml",
+					".str",
+					".lay"
+				],
+				"configuration": "./language-configuration.json"
+			}
+		],
+		"grammars": [
+			{
+				"language": "tml",
+				"scopeName": "source.tml",
+				"path": "./syntaxes/tml.tmLanguage.json"
+			}
+		],
+		"snippets": [
+			{
+				"language": "tml",
+				"path": "./snippets/tml.json"
+			}
+		],
+		"configurationDefaults": {
+			"telemetry.enableCrashReporter": false,
+			"telemetry.enableTelemetry": false,
+			"[tml]": {
+				"editor.tabSize": 3,
+				"editor.wordBasedSuggestions": false
+			}
 		},
-		"configuration":[
+		"configuration": [
 			{
 				"title": "TML Linter",
 				"properties": {
-					"tml.linterEnabled":{
-						"type":"boolean",
-						"default":false,
+					"tml.linterEnabled": {
+						"type": "boolean",
+						"default": false,
 						"description": "Linter für TML aktivieren"
 					},
-					"tml.linterPath":{
-						"type":"string",
+					"tml.linterPath": {
+						"type": "string",
 						"default": "",
 						"description": "Pfad zum TML-Linter."
 					},
-					"tml.linterFileExtensions":{
+					"tml.linterFileExtensions": {
 						"type": "string",
 						"default": ".tml;.TML",
 						"description": "Dateiendungen, durch Semicolon getrennt, bei welchen der Linter aktiv wird"
@@ -78,7 +97,8 @@
 		"compile": "tsc -p ./",
 		"watch": "tsc -watch -p ./",
 		"pretest": "npm run compile",
-		"test": "node ./out/test/runTest.js"
+		"test": "node ./out/test/runTest.js",
+		"postinstall": "node ./node_modules/vscode/bin/install"
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.1",
@@ -87,8 +107,8 @@
 		"@types/vscode": "^1.41.0",
 		"glob": "^7.1.5",
 		"mocha": "^6.2.2",
-		"typescript": "^3.6.4",
 		"tslint": "^5.20.0",
+		"typescript": "^3.6.4",
 		"vscode-test": "^1.2.2"
 	}
 }

@@ -5,6 +5,7 @@ import * as helper from './formatter-helpers';
 import * as hover_handler from './hover';
 import * as tml_symbol from './symbol-provider';
 import * as tml_diagnostic from './diagnostic';
+import * as tml_commands from './commands';
 
 
 
@@ -30,29 +31,16 @@ const indent_out: string[] = [
 	"OUT"
 ];
 
-
-
-
-
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
-
-
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('tml.test', () => {
-		// The code you place here will be executed every time your command is executed
-
-		// Display a message box to the user
-		vscode.window.showInformationMessage('TML Erweiterung ist geladen!');
+	/******** COMMANDS ********/
+	let disposable = vscode.commands.registerCommand('tml.mark_steps', () => {
+		tml_commands.mark_sequence_steps();
 	});
 
 	context.subscriptions.push(disposable);
 
-	// hover for local variables
+	/******** HOVER PROVIDER ********/
 	disposable = vscode.languages.registerHoverProvider('tml', {
 		provideHover(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken) {
 			return hover_handler.hover_handler(document, position, token);
@@ -62,7 +50,8 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(disposable);
 
 
-	// 👍 formatter implemented using API
+	/******** FORMATTER ********/
+	//TODO: move to own file
 	disposable = vscode.languages.registerDocumentFormattingEditProvider('tml', {
 		provideDocumentFormattingEdits(document: vscode.TextDocument): vscode.TextEdit[] {
 			//@TODO use preallocated array of size document.lineCount
@@ -111,6 +100,7 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 	context.subscriptions.push(disposable);
 
+	/******** Symbol Provider (Outline) ********/
 	context.subscriptions.push(
 		vscode.languages.registerDocumentSymbolProvider(
 			{ scheme: "file", language: "tml" },
@@ -118,7 +108,7 @@ export function activate(context: vscode.ExtensionContext) {
 		)
 	);
 
-	/* Diagnostic support */
+	/******** Diagnostics Support (Linter) ********/
 	tml_diagnostic.init(context);
 	vscode.workspace.onDidSaveTextDocument(tml_diagnostic.check_syntax);
 	vscode.workspace.onDidChangeConfiguration(tml_diagnostic.check_configuration);
@@ -126,5 +116,4 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 
-// this method is called when your extension is deactivated
 export function deactivate() { }
