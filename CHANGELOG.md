@@ -24,3 +24,7 @@
 ### 1.5.0
 
 - Generate STEP Comments (via Command)
+
+### 1.6.0
+
+- corrected DO loop indentation

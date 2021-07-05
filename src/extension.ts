@@ -17,7 +17,8 @@ const indent_in: string[] = [
 	"ZE",
 	"Z0",
 	"STEP",
-	"OUT"
+	"OUT",
+	"END DO"
 ];
 
 const indent_out: string[] = [
@@ -28,7 +29,8 @@ const indent_out: string[] = [
 	"Z1",
 	"Z0",
 	"STEP",
-	"OUT"
+	"OUT",
+	"DO"
 ];
 
 export function activate(context: vscode.ExtensionContext) {

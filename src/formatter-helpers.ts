@@ -29,7 +29,7 @@ const buffer: string[] = [
 
 /**
  * Adds or removes whitespaces to match the desired indentation level
- * and turns teh string to uppercase
+ * and turns the string to uppercase
  * 
  * @param line The line to indent
  * @param level The indentation level

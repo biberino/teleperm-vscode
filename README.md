@@ -50,7 +50,10 @@ Syntax checking (linting)
 
 Configurable file extensions for linting
 
-
 ### 1.5.0
 
 Generate STEP Comments (via Command)
+
+### 1.6.0
+
+Corrected DO loop indentation
