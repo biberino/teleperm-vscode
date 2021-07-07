@@ -58,6 +58,6 @@ Generate STEP Comments (via Command)
 
 Corrected DO loop indentation
 
-### 1.7.0
+### 1.7.1
 
-Spaces in filepaths are now escaped
+Linting files with spaces in path now works

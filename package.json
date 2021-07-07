@@ -2,7 +2,7 @@
 	"name": "teleperm-tml",
 	"displayName": "teleperm-tml",
 	"description": "Teleperm Language Support",
-	"version": "1.7.0",
+	"version": "1.7.1",
 	"publisher": "Fackler",
 	"icon": "icon.png",
 	"engines": {

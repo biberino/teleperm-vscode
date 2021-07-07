@@ -1,5 +1,7 @@
 import * as vscode from 'vscode';
 import * as p from 'child_process';
+import * as os from 'os'
+import { openStdin } from 'process';
 
 
 let diagnosticCollection: vscode.DiagnosticCollection;
@@ -57,10 +59,10 @@ export function check_syntax(document: vscode.TextDocument) {
     if (!file_extension_ok) { return; }
 
 
-    let escaped_path = uri.fsPath.replace(/ /g, "\\ ");
+    let quoted_path = '"' + uri.fsPath + '"';
 
     //checks if the file exists are done by the linter
-    p.exec(linter + " " + escaped_path, (error, stdout, stderr) => {
+    p.exec(linter + " " + quoted_path, (error, stdout, stderr) => {
 
         if (error) {
 
