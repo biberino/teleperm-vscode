@@ -48,7 +48,7 @@ export function check_syntax(document: vscode.TextDocument) {
         const element = split[index];
         if (document.fileName.endsWith(element) && element !== "") {
             console.log(element);
-            
+
             file_extension_ok = true;
             break;
         }
@@ -57,11 +57,11 @@ export function check_syntax(document: vscode.TextDocument) {
     if (!file_extension_ok) { return; }
 
 
-
-
+    let escaped_path = uri.fsPath.replace(/ /g, "\\ ");
 
     //checks if the file exists are done by the linter
-    p.exec(linter + " " + uri.fsPath, (error, stdout, stderr) => {
+    p.exec(linter + " " + escaped_path, (error, stdout, stderr) => {
+
         if (error) {
 
             if (error.code) {

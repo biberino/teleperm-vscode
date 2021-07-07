@@ -28,3 +28,8 @@
 ### 1.6.0
 
 - corrected DO loop indentation
+
+
+### 1.7.0
+
+- Spaces in filepaths are now escaped

@@ -57,3 +57,7 @@ Generate STEP Comments (via Command)
 ### 1.6.0
 
 Corrected DO loop indentation
+
+### 1.7.0
+
+Spaces in filepaths are now escaped
