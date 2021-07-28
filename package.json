@@ -2,7 +2,7 @@
 	"name": "teleperm-tml",
 	"displayName": "teleperm-tml",
 	"description": "Teleperm Language Support",
-	"version": "1.7.1",
+	"version": "1.8.0",
 	"publisher": "Fackler",
 	"icon": "icon.png",
 	"engines": {
@@ -62,8 +62,6 @@
 			}
 		],
 		"configurationDefaults": {
-			"telemetry.enableCrashReporter": false,
-			"telemetry.enableTelemetry": false,
 			"[tml]": {
 				"editor.tabSize": 3,
 				"editor.wordBasedSuggestions": false
@@ -89,6 +87,21 @@
 						"description": "Dateiendungen, durch Semicolon getrennt, bei welchen der Linter aktiv wird"
 					}
 				}
+			},
+			{
+				"title": "TML ASGlobal",
+				"properties": {
+					"tml.asglobalEnabled": {
+						"type": "boolean",
+						"default": false,
+						"description": "Dokumentation für Globaldaten aus ASGlobal Exporten beziehen"
+					},
+					"tml.asglobalBasePath": {
+						"type": "string",
+						"default": "",
+						"description": "Vollständiger Pfad zu den aktuellen Exporten von ASGlobal. Es wird automatisch der aktuellste Ordner ermittelt (YYYY-MM-DD)"
+					}
+				}
 			}
 		]
 	},
@@ -110,5 +123,9 @@
 		"tslint": "^5.20.0",
 		"typescript": "^3.6.4",
 		"vscode-test": "^1.2.2"
+	},
+	"dependencies": {
+		"dbffile": "^1.7.1",
+		"moment": "^2.29.1"
 	}
 }

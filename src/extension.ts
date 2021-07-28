@@ -6,7 +6,7 @@ import * as hover_handler from './hover';
 import * as tml_symbol from './symbol-provider';
 import * as tml_diagnostic from './diagnostic';
 import * as tml_commands from './commands';
-
+import * as asglobal from './asglobal';
 
 
 const indent_in: string[] = [
@@ -112,6 +112,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	/******** Diagnostics Support (Linter) ********/
 	tml_diagnostic.init(context);
+	asglobal.init();
 	vscode.workspace.onDidSaveTextDocument(tml_diagnostic.check_syntax);
 	vscode.workspace.onDidChangeConfiguration(tml_diagnostic.check_configuration);
 

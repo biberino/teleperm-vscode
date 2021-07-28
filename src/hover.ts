@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import * as asglobal from './asglobal';
 
 const teleperm_colors: string[] = [
     "schwarz",
@@ -135,21 +136,33 @@ export function generate_color_hover(teleperm_color: string): vscode.Hover {
 
 }
 
-export function hover_handler(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken): vscode.Hover {
-    const range = document.getWordRangeAtPosition(position);
+export async function hover_handler(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken): Promise<vscode.Hover> {
+    const range = document.getWordRangeAtPosition(position, /([A-Z]|[0-9]|[.]){1,100}/);
     const word = document.getText(range);
     const line = document.lineAt(position);
     const line_trimmed = line.text.toUpperCase().trim();
 
     const regex_local_variable = /((LA)|(LB))[0-9]{1,4}/;
     const regex_global_variable = /((GA)|(GB))[0-9]{1,4}/;
+    const regex_global_variable_long = /((GA)|(GB))[.]([A-Z]|[0-9]){1,4}[.][0-9]{1,3}/;
     if (range?.isSingleLine) {
+        console.log(word);
         if (regex_local_variable.test(word)) {
             return new vscode.Hover(parse_local_variables_until_found(document, word));
         }
 
         if (regex_global_variable.test(word)) {
+            await asglobal.get_dokumentation(10, "GB.22.1");
             return new vscode.Hover({ "language": "tml", "value": find_latest_mux(document, word, position) });
+        }
+
+        if (regex_global_variable_long.test(word)) {
+            console.log("HOVER");
+            let doku = await asglobal.get_dokumentation(10, word);
+            if (doku === "") {
+                doku = "Nicht dokumentiert!";
+            }
+            return new vscode.Hover({ "language": "tml", "value": doku });
         }
 
         if (line_trimmed.startsWith("MO")) {
