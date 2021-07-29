@@ -37,3 +37,7 @@
 ### 1.8.0
 
 - Added support for AS Global dokumentation
+
+### 1.8.1
+
+- Fixed local variable parsing in global statements
