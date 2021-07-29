@@ -174,8 +174,9 @@ export async function hover_handler(document: vscode.TextDocument, position: vsc
     let options = vscode.workspace.getConfiguration("tml");
 
     if (range?.isSingleLine) {
-        if (regex_local_variable.test(word)) {
-            return new vscode.Hover(parse_local_variables_until_found(document, word));
+        let match = regex_local_variable.exec(word)
+        if (match) {
+            return new vscode.Hover(parse_local_variables_until_found(document, word.substr(match.index, match[0].length)));
         }
         if (regex_global_variable.test(word)) {
             let latest_mux = find_latest_mux(document, word, position);
