@@ -69,3 +69,7 @@ Added support for AS Global dokumentation
 ### 1.8.1
 
 Fixed local variable parsing in global statements
+
+### 1.8.2
+
+Improved AS recognition
