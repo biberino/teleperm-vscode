@@ -116,6 +116,7 @@ export function find_asglobal_info(document: vscode.TextDocument): number {
             buffer = buffer.replace("/*", "");
             buffer = buffer.replace("*/", "");
             buffer = buffer.replace(";", "");
+            buffer = buffer.replace(/\s/g, '');
             let split = buffer.split("=");
 
             if ((split.length === 2) && (split[1].length === 4)) {
