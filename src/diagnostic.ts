@@ -49,8 +49,6 @@ export function check_syntax(document: vscode.TextDocument) {
     for (let index = 0; index < split.length; index++) {
         const element = split[index];
         if (document.fileName.endsWith(element) && element !== "") {
-            console.log(element);
-
             file_extension_ok = true;
             break;
         }

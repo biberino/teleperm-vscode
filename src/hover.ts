@@ -28,6 +28,7 @@ export function parse_local_variables(document: vscode.TextDocument): Map<string
             buffer = buffer.replace("/*", "");
             buffer = buffer.replace("*/", "");
             let split = buffer.split("=");
+            //TODO: split mit mehr als 2 erlauben, zum Beispiel LA1 = bla = blub
             if (split.length === 2) {
                 retVal.set(split[0].replace(/\s/g, ''), split[1].replace(";", ""));
             }
@@ -74,7 +75,7 @@ export function parse_local_variables_until_found(document: vscode.TextDocument,
  * @param position The position of the cursor
  * @returns String representing the global variable name, eg GA.TEST
  */
-export function find_latest_mux(document: vscode.TextDocument, variable: string, position: vscode.Position): string {
+export function find_latest_mux(document: vscode.TextDocument, variable: string, position: vscode.Position): { data: string, pos: number, length: number, type: number, line: number } {
 
     const var_type: string = variable.substr(0, 2).toUpperCase();
     //regexp for MUX XX.XXXX or MUX,XX,XXXX (.lay)
@@ -83,14 +84,39 @@ export function find_latest_mux(document: vscode.TextDocument, variable: string,
 
     for (let current_line = position.line; current_line >= 0; current_line--) {
         const line = document.lineAt(current_line).text.trim().toUpperCase();
-        if (regex_mux.test(line)) {
-            return line;
+
+        let match = regex_mux.exec(line);
+        if (match) {
+            return {
+                data: line,
+                pos: match?.index,
+                length: match[0].length,
+                type: 0,
+                line: current_line + 1
+            };
         }
-        if (regex_implicit_pointer_change.test(line)) {
-            return line;
+
+
+        match = regex_implicit_pointer_change.exec(line);
+        if (match) {
+            return {
+                data: line,
+                pos: match?.index,
+                length: match[0].length,
+                type: 1,
+                line: current_line + 1
+
+            };
         }
     }
-    return "Keinen aktiven Zeiger gefunden!";
+    return {
+        data: "Kein aktiver Zeiger gefunden",
+        pos: -1,
+        length: -1,
+        type: 2,
+        line: -1
+
+    };
 }
 
 /**
@@ -145,20 +171,49 @@ export async function hover_handler(document: vscode.TextDocument, position: vsc
     const regex_local_variable = /((LA)|(LB))[0-9]{1,4}/;
     const regex_global_variable = /((GA)|(GB))[0-9]{1,4}/;
     const regex_global_variable_long = /((GA)|(GB))[.]([A-Z]|[0-9]){1,4}[.][0-9]{1,3}/;
+    let options = vscode.workspace.getConfiguration("tml");
+
     if (range?.isSingleLine) {
-        console.log(word);
         if (regex_local_variable.test(word)) {
             return new vscode.Hover(parse_local_variables_until_found(document, word));
         }
-
         if (regex_global_variable.test(word)) {
-            await asglobal.get_dokumentation(10, "GB.22.1");
-            return new vscode.Hover({ "language": "tml", "value": find_latest_mux(document, word, position) });
+            let latest_mux = find_latest_mux(document, word, position);
+            if ((latest_mux.type === 2) || (!options.get("asglobalEnabled"))) {
+                return new vscode.Hover({ "language": "tml", "value": latest_mux.line.toString() + ": " + latest_mux.data });
+            }
+            let tml_string = latest_mux.data.substr(latest_mux.pos, latest_mux.length);
+            if (latest_mux.type === 0) {
+                tml_string = tml_string.split(" ")[1] + "." + word.substring(2);
+            } else {
+                tml_string = latest_mux.data.substr(latest_mux.pos, latest_mux.length);
+                let split_tml = tml_string.split(".");
+                tml_string = split_tml[0] + "." + split_tml[1] + "." + word.substring(2);
+            }
+
+            let AS = asglobal.find_asglobal_info(document);
+
+            let doku = "AS unklar. Füge ein /*ASGLOBAL=ASXX*/ der Datei hinzu.";
+
+            if ((AS > 0) && (AS < 100)) {
+                doku = await asglobal.get_dokumentation(AS, tml_string);
+            }
+            if (doku === "") {
+                doku = "Nicht dokumentiert!";
+            }
+            return new vscode.Hover({ "language": "tml", "value": latest_mux.line.toString() + ": " + latest_mux.data + "\n" + doku });
         }
 
         if (regex_global_variable_long.test(word)) {
-            console.log("HOVER");
-            let doku = await asglobal.get_dokumentation(10, word);
+            if (!options.get("asglobalEnabled")) {
+                return new vscode.Hover("");
+            }
+            let AS = asglobal.find_asglobal_info(document);
+
+            let doku = "AS unklar. Füge ein /*ASGLOBAL=ASXX*/ der Datei hinzu.";
+            if ((AS > 0) && (AS < 100)) {
+                doku = await asglobal.get_dokumentation(AS, word);
+            }
             if (doku === "") {
                 doku = "Nicht dokumentiert!";
             }

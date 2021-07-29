@@ -61,3 +61,7 @@ Corrected DO loop indentation
 ### 1.7.1
 
 Linting files with spaces in path now works
+
+### 1.8.0
+
+Added support for AS Global dokumentation

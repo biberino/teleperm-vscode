@@ -17,7 +17,6 @@ export function get_latest_asglobal_folder(asglobal_export_path: string): string
         return "ASGlobal Ordner existiert nicht. Überprüfe deine Einstellungen";
     }
     fs.readdirSync(asglobal_export_path).forEach(file => {
-        console.log(file);
         let m = parse_date_from_folder(file);
         if (m.isValid()) {
             if (latest_folder === "") {
@@ -57,7 +56,7 @@ export function init() {
         if (latest_asglobal_folder_global === "") {
             vscode.window.showErrorMessage("Es konnte kein passender AS Global Unterordner ermittelt werden");
         } else {
-            vscode.window.showInformationMessage("Aktuellster AS Global Unterordner: " + latest_asglobal_folder_global)
+            vscode.window.showInformationMessage("Aktuellster AS Global Stand: " + latest_asglobal_folder_global)
         }
     } else {
         vscode.window.showErrorMessage(error);
@@ -85,25 +84,52 @@ export async function get_dokumentation(AS: number, tml_string: string): Promise
     }
     let split = tml_string.split('.');
     //TODO: normalize path
-    const filepath = asglobal_path + "/" + latest_asglobal_folder_global + "/AS_" + AS.toString() + "/" + split[0] + "/" + split[1] + ".DBF";
+    let AS_string = AS.toString();
+    if (AS < 10) {
+        AS_string = "0" + AS_string;
+    }
+    const filepath = asglobal_path + "/" + latest_asglobal_folder_global + "/AS_" + AS_string + "/" + split[0] + "/" + split[1] + ".DBF";
     if (!fs.existsSync(filepath)) {
         return "";
     }
     let dbf = await DBFFile.open(filepath);
-    //console.log(`DBF file contains ${dbf.recordCount} records.`);
-    //console.log(`Field names: ${dbf.fields.map(f => f.name).join(', ')}`);
     //TODO: hier optimieren
     let records = await dbf.readRecords(255);
     for (let record of records) {
-        console.log(typeof record["ELNR"]);
-
         if (record["ELNR"] === parseInt(split[2])) {
-            console.log("found");
-
             return typeof record["KOMMENTAR"] === 'string' ? record["KOMMENTAR"] : "";
         }
     }
     return "";
+}
+
+export function find_asglobal_info(document: vscode.TextDocument): number {
+    let options = vscode.workspace.getConfiguration("tml");
+    if (!options.get("asglobalEnabled")) {
+        return -1;
+    }
+
+    for (let index = 0; index < document.lineCount; index++) {
+        const line = document.lineAt(index);
+        let buffer = line.text.toUpperCase().trim();
+        if (buffer.startsWith("/*") && (buffer.indexOf("=") !== -1) && (buffer.indexOf("ASGLOBAL") !== -1)) {
+            buffer = buffer.replace("/*", "");
+            buffer = buffer.replace("*/", "");
+            buffer = buffer.replace(";", "");
+            let split = buffer.split("=");
+
+            if ((split.length === 2) && (split[1].length === 4)) {
+                return parseInt(split[1].substr(2, 2));
+            }
+        }
+    }
+    return -1;
+}
+
+export function check_configuration(e: vscode.ConfigurationChangeEvent) {
+    if (e.affectsConfiguration("tml")) {
+        init();
+    }
 }
 
 function parse_date_from_folder(foldername: string): moment.Moment {

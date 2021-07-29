@@ -114,8 +114,13 @@ export function activate(context: vscode.ExtensionContext) {
 	tml_diagnostic.init(context);
 	asglobal.init();
 	vscode.workspace.onDidSaveTextDocument(tml_diagnostic.check_syntax);
-	vscode.workspace.onDidChangeConfiguration(tml_diagnostic.check_configuration);
+	vscode.workspace.onDidChangeConfiguration(check_tml_configuration);
 
+}
+
+function check_tml_configuration(e: vscode.ConfigurationChangeEvent) {
+	tml_diagnostic.check_configuration(e);
+	asglobal.check_configuration(e);
 }
 
 
