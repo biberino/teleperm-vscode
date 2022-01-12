@@ -1,9 +1,11 @@
 
 
 import fs = require('fs');
+import * as path from 'path';
 import * as vscode from 'vscode';
 import moment = require('moment');
 import { DBFFile } from 'dbffile';
+import { parse } from 'csv-parse/sync';
 
 
 let latest_asglobal_folder_global: string = "";
@@ -56,7 +58,7 @@ export function init() {
         if (latest_asglobal_folder_global === "") {
             vscode.window.showErrorMessage("Es konnte kein passender AS Global Unterordner ermittelt werden");
         } else {
-            vscode.window.showInformationMessage("Aktuellster AS Global Stand: " + latest_asglobal_folder_global)
+            vscode.window.showInformationMessage("Aktuellster AS Global Stand: " + latest_asglobal_folder_global);
         }
     } else {
         vscode.window.showErrorMessage(error);
@@ -83,23 +85,36 @@ export async function get_dokumentation(AS: number, tml_string: string): Promise
         return "";
     }
     let split = tml_string.split('.');
+    let element_number = split[2];
     //TODO: normalize path
     let AS_string = AS.toString();
     if (AS < 10) {
         AS_string = "0" + AS_string;
     }
-    const filepath = asglobal_path + "/" + latest_asglobal_folder_global + "/AS_" + AS_string + "/" + split[0] + "/" + split[1] + ".DBF";
-    if (!fs.existsSync(filepath)) {
+    const filepath_dbase = asglobal_path + "/" + latest_asglobal_folder_global + "/AS_" + AS_string + "/" + split[0] + "/" + split[1] + ".DBF";
+    const filepath_csv = asglobal_path + "/" + latest_asglobal_folder_global + "/AS_" + AS_string + "/" + split[0] + "/" + split[1] + ".CSV";
+
+    //CSV auslesen
+    if (fs.existsSync(filepath_csv)) {
+        return get_documentation_from_csv(filepath_csv, element_number);
+    }
+
+
+    //DBASE auslesen  
+    if (fs.existsSync(filepath_dbase)) {
+
+        let dbf = await DBFFile.open(filepath_dbase);
+        //TODO: hier optimieren
+        let records = await dbf.readRecords(255);
+        for (let record of records) {
+            if (record["ELNR"] === parseInt(element_number)) {
+                return typeof record["KOMMENTAR"] === 'string' ? record["KOMMENTAR"] : "";
+            }
+        }
         return "";
     }
-    let dbf = await DBFFile.open(filepath);
-    //TODO: hier optimieren
-    let records = await dbf.readRecords(255);
-    for (let record of records) {
-        if (record["ELNR"] === parseInt(split[2])) {
-            return typeof record["KOMMENTAR"] === 'string' ? record["KOMMENTAR"] : "";
-        }
-    }
+
+    //weder CSV noch DBASE vorhanden
     return "";
 }
 
@@ -136,4 +151,22 @@ export function check_configuration(e: vscode.ConfigurationChangeEvent) {
 function parse_date_from_folder(foldername: string): moment.Moment {
 
     return moment(foldername, "YYYY-MM-DD", true);
+}
+
+function get_documentation_from_csv(filepath: string, element_number: string): string {
+    var fileData = fs.readFileSync(filepath, 'latin1').toString();
+
+    const records = parse(fileData, {
+        columns: true,
+        skip_empty_lines: true,
+        delimiter: ";"
+    });
+
+    for (let record of records) {
+        if (record["ElNr"] === element_number) {
+            return typeof record["Kommentar"] === 'string' ? record["Kommentar"] : "";
+        }
+    }
+
+    return "";
 }

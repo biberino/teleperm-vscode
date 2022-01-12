@@ -73,3 +73,7 @@ Fixed local variable parsing in global statements
 ### 1.8.2
 
 Improved AS recognition
+
+### 1.8.3
+
+Support for DBase and CSV ASGlobal export files
